@@ -1,12 +1,19 @@
 import { NgModule } from '@angular/core';
 import { PrdCdkComponent } from './prd-cdk.component';
+import { HideZeroPipe } from './pipes/hide-zero.pipe';
 
 
 
 @NgModule({
-  declarations: [PrdCdkComponent],
+  declarations: [
+    PrdCdkComponent,
+    HideZeroPipe
+  ],
   imports: [
   ],
-  exports: [PrdCdkComponent]
+  exports: [
+    PrdCdkComponent,
+    HideZeroPipe,
+  ]
 })
 export class PrdCdkModule { }
