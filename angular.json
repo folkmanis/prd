@@ -3,5 +3,46 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "prd-cdk": {
+      "projectType": "library",
+      "root": "projects/prd-cdk",
+      "sourceRoot": "projects/prd-cdk/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/prd-cdk/tsconfig.lib.json",
+            "project": "projects/prd-cdk/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/prd-cdk/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/prd-cdk/src/test.ts",
+            "tsConfig": "projects/prd-cdk/tsconfig.spec.json",
+            "karmaConfig": "projects/prd-cdk/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/prd-cdk/tsconfig.lib.json",
+              "projects/prd-cdk/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "prd-cdk"
 }

@@ -14,6 +14,15 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "paths": {
+      "prd-cdk": [
+        "dist/prd-cdk/prd-cdk",
+        "dist/prd-cdk"
+      ],
+      "xlsx": [
+        "./node_modules/xlsx"
+      ]
+    },
     "target": "es2015",
     "module": "es2020",
     "lib": [
