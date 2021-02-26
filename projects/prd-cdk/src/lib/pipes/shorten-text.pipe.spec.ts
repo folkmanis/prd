@@ -15,20 +15,28 @@ describe('ShortenTextPipe', () => {
     expect(pipe.transform('123456789', 6)).toEqual('123...');
   });
 
+  it('should shorten number', () => {
+    expect(pipe.transform(123456, 4)).toBe('####');
+  });
+
+  it('should not shorten number', () => {
+    expect(pipe.transform(123456, 6)).toBe(123456);
+  });
+
+  it('should not change other objects', () => {
+    expect(pipe.transform({})).toEqual({});
+  });
+
   it('should not change short text', () => {
     expect(pipe.transform('123456789     ', 10)).toEqual('123456789');
   });
 
   it('should not change 3 symbols', () => {
-    expect(pipe.transform('123', 3)).toBe('123');
+    expect(pipe.transform('123   ', 3)).toBe('123');
   });
 
   it('invalid length should return empty string', () => {
     expect(pipe.transform('123', -1)).toBe('');
-  });
-
-  it('throw error with invalid argument', () => {
-    expect(() => pipe.transform({} as string)).toThrowError();
   });
 
   it('default length should be 100 symbols', () => {

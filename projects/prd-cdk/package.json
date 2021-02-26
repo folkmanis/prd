@@ -1,8 +1,9 @@
 {
   "name": "prd-cdk",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "peerDependencies": {
     "xlsx": "^0.16.9",
+    "filesize": "^6.1.0",
     "@angular/common": "^11.2.1",
     "@angular/core": "^11.2.1"
   },
