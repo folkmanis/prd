@@ -1,6 +1,6 @@
 {
   "name": "prd-cdk",
-  "version": "0.1.0",
+  "version": "0.2.2",
   "peerDependencies": {
     "xlsx": "^0.16.9",
     "filesize": "^6.1.0",
