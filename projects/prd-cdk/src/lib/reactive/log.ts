@@ -1,8 +1,16 @@
 import { pipe, MonoTypeOperatorFunction } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-export const log: <T>(message: string) => MonoTypeOperatorFunction<T> = message => {
-    return pipe(
-        tap(obj => console.log(message, obj)),
-    );
+export function log<T>(messageOrPredicate: string | ((val: any) => any), message?: string): MonoTypeOperatorFunction<T> {
+    const predicate = typeof messageOrPredicate === 'function' ? messageOrPredicate : (obj: any) => obj;
+    message = typeof messageOrPredicate === 'string' ? messageOrPredicate : message;
+    if (message) {
+        return pipe(
+            tap(obj => console.log(message, predicate(obj))),
+        );
+    } else {
+        return pipe(
+            tap(obj => console.log(predicate(obj))),
+        );
+    }
 };

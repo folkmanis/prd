@@ -39,5 +39,23 @@ describe('it should output to console', () => {
 
 
     });
+    it('should output predicate to console', () => {
+
+        const input = 3;
+        const output = 6;
+        const predicate = (x: number) => x * 2;
+        spyOn(console, 'log');
+
+        testScheduler.run(({ cold, expectObservable, flush }) => {
+            expectObservable(
+                cold('a|', { a: input }).pipe(log(predicate, 'testing'))
+            ).toBe('  b|', { b: input });
+
+            flush();
+            expect(console.log).toHaveBeenCalledOnceWith('testing', output);
+        });
+
+
+    });
 
 });
