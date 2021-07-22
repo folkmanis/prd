@@ -15,3 +15,9 @@ Contains Angular pipes, components and RxJS functions
 - cacheWithUpdate
 - DestroyService for Angular components
 - log
+
+## utilities
+
+- deepCopy
+- omit
+- pick
