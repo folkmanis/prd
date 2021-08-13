@@ -1,18 +1,3 @@
-import * as XLSX from 'xlsx';
-
-export function parseXml(data: any): any[][] {
-
-    const wb: XLSX.WorkBook = XLSX.read(data, { type: 'binary' });
-
-    /* grab first sheet */
-    const wsname: string = wb.SheetNames[0];
-    const ws: XLSX.WorkSheet = wb.Sheets[wsname];
-
-    /* save data */
-    return XLSX.utils.sheet_to_json(ws, { header: 1, raw: true }) as [][];
-
-}
-
 export function parseCsv(csv: string, delimiter: string): any[][] {
     const lines = csv.split('\n');
     const data = [];

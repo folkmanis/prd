@@ -1,23 +1,9 @@
 import { Injectable } from '@angular/core';
-import * as XLSX from 'xlsx';
 
 @Injectable({ providedIn: 'any' })
 export class ParserService {
 
   constructor() { }
-
-  parseXml(data: any): any[][] {
-
-    const wb: XLSX.WorkBook = XLSX.read(data, { type: 'binary' });
-
-    /* grab first sheet */
-    const wsname: string = wb.SheetNames[0];
-    const ws: XLSX.WorkSheet = wb.Sheets[wsname];
-
-    /* save data */
-    return XLSX.utils.sheet_to_json(ws, { header: 1, raw: true }) as [][];
-
-  }
 
   parseCsv(csv: string, delimiter: string): any[][] {
     const lines = csv.split('\n');
