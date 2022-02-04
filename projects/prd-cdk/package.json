@@ -2,9 +2,10 @@
   "name": "prd-cdk",
   "version": "0.8.0",
   "peerDependencies": {
-    "filesize": "7.x",
-    "@angular/common": "12.x",
-    "@angular/core": "12.x"
+    "filesize": "8.x",
+    "@angular/common": "13.x",
+    "@angular/core": "13.x",
+    "rxjs": "7.x"
   },
   "dependencies": {
     "tslib": "^2.0.0"

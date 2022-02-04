@@ -21,7 +21,7 @@ describe('FilesizePipe', () => {
     });
 
     it('should parse with default settings', () => {
-      expect(pipe.transform(1024)).toBe('1 KB');
+      expect(pipe.transform(1024)).toBe('1.02 kB');
     });
 
     it('should parse with options', () => {

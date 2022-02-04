@@ -20,7 +20,7 @@
     "@angular/platform-browser": "~13.2.1",
     "@angular/platform-browser-dynamic": "~13.2.1",
     "@angular/router": "~13.2.1",
-    "rxjs": "~6.6.7",
+    "rxjs": "^7.5.2",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
@@ -31,7 +31,7 @@
     "@types/jasmine": "^3.8.1",
     "@types/node": "^12.20.16",
     "codelyzer": "^6.0.2",
-    "filesize": "^7.0.0",
+    "filesize": "^8.0.7",
     "jasmine-core": "^3.8.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "^6.3.4",
