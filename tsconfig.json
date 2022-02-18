@@ -15,6 +15,7 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "prd-cdk": [
         "dist/prd-cdk/prd-cdk",
