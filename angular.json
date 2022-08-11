@@ -43,6 +43,5 @@
         }
       }
     }
-  },
-  "defaultProject": "prd-cdk"
+  }
 }
