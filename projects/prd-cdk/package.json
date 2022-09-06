@@ -1,6 +1,6 @@
 {
   "name": "prd-cdk",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "peerDependencies": {
     "filesize": ">= 9.0.0",
     "@angular/common": ">= 14.1.0",
