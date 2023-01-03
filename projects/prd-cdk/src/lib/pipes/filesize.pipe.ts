@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import filesize from 'filesize';
+import { filesize } from 'filesize';
 
 @Pipe({
   name: 'filesize'
@@ -12,8 +12,10 @@ export class FilesizePipe implements PipeTransform {
    * @param options refer to https://filesizejs.com/
    */
   transform(value: number, options?: any): string | null {
-    if (isNaN(+value)) { return null; }
-    return filesize(value, options);
+    if (isNaN(+value)) {
+      return null;
+    }
+    return filesize(value, options) as string;
   }
 
 }
