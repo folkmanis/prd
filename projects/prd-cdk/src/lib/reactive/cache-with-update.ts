@@ -11,8 +11,15 @@ export function cacheWithUpdate<T>(
             data$.pipe(tap(d => cache = d)),
             update$.pipe(
                 filter(_ => !!cache),
-                map(item => cache.map(c => compareFn(c, item) ? item : c)),
-                tap(data => cache = data)
+                map(upd => {
+                    const idx = cache.findIndex(c => compareFn(c, upd));
+                    if (idx > -1) {
+                        cache = [...cache.slice(0, idx), upd, ...cache.slice(idx + 1)];
+                    } else {
+                        cache = [upd, ...cache];
+                    }
+                    return cache;
+                }),
             )
         );
     };
