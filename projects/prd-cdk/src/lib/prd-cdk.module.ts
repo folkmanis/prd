@@ -5,12 +5,10 @@ import { FilesizePipe } from './pipes/filesize.pipe';
 
 
 @NgModule({
-  declarations: [
+  imports: [
     HideZeroPipe,
     ShortenTextPipe,
     FilesizePipe,
-  ],
-  imports: [
   ],
   exports: [
     HideZeroPipe,
