@@ -1,0 +1,14 @@
+<div>
+  <input
+    prdExpressionInput
+    [(ngModel)]="value"
+    [prdExpressionInputComma]="acceptComma"
+  />
+</div>
+<div>
+  <input type="checkbox" id="comma" [(ngModel)]="acceptComma" />
+  <label for="comma">accept comma</label>
+</div>
+<div>
+  {{ value }}
+</div>
