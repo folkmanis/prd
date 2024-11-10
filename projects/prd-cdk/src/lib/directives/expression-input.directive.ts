@@ -4,6 +4,7 @@ import {
   ElementRef,
   inject,
   input,
+  signal,
 } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { evaluate } from 'simple-math-evaluator';
@@ -16,14 +17,17 @@ export type OnBlurAction = 'ignore' | 'calculate';
   host: {
     '(blur)': 'onBlur()',
   },
+  exportAs: 'prdExpressionInput',
 })
 export class ExpressionInputDirective {
   private input = inject(ElementRef).nativeElement as HTMLInputElement;
-  private calculated: number | null = null;
 
-  allowCommaSeparator = input(false, {
+  private readonly calculated = signal<number | null>(null);
+  calculatedValue = this.calculated.asReadonly();
+
+  noCommaSeparator = input(false, {
     transform: booleanAttribute,
-    alias: 'prdExpressionInputComma',
+    alias: 'prdExpressionNoComma',
   });
 
   onBlurAction = input<OnBlurAction>('calculate', {
@@ -37,11 +41,9 @@ export class ExpressionInputDirective {
   }
 
   onBlur() {
-    if (
-      this.onBlurAction() === 'calculate' &&
-      typeof this.calculated === 'number'
-    ) {
-      this.input.value = this.calculated.toString();
+    const calc = this.calculated();
+    if (this.onBlurAction() === 'calculate' && typeof calc === 'number') {
+      this.input.value = calc.toString();
     }
   }
 
@@ -51,8 +53,8 @@ export class ExpressionInputDirective {
     valueAccessor.registerOnChange = (fn: (_: unknown) => void) => {
       return original.call(valueAccessor, (value: unknown) => {
         if (typeof value === 'string') {
-          this.calculated = this.evaluateExpression(value);
-          return fn(this.calculated);
+          this.calculated.set(this.evaluateExpression(value));
+          return fn(this.calculated());
         } else {
           return fn(null);
         }
@@ -73,8 +75,8 @@ export class ExpressionInputDirective {
   }
 
   private replaceCommas(value: string): string {
-    return this.allowCommaSeparator()
-      ? value.replace(/(?<=\d),(?=\d)/, '.')
-      : value;
+    return this.noCommaSeparator()
+      ? value
+      : value.replace(/(?<=\d),(?=\d)/, '.');
   }
 }

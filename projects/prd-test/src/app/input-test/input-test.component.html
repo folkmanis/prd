@@ -1,9 +1,19 @@
 <div>
-  <input
-    prdExpressionInput
-    [(ngModel)]="value"
-    [prdExpressionInputComma]="acceptComma"
-  />
+  <mat-form-field>
+    <input
+      matInput
+      prdExpressionInput
+      [(ngModel)]="value"
+      [prdExpressionNoComma]="!acceptComma"
+      #calc="prdExpressionInput"
+      #testInput
+    />
+    @if (testInput.value.toString() !== calc.calculatedValue()?.toString() ) {
+    <mat-hint>
+      {{ calc.calculatedValue() }}
+    </mat-hint>
+    }
+  </mat-form-field>
 </div>
 <div>
   <input type="checkbox" id="comma" [(ngModel)]="acceptComma" />

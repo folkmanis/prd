@@ -1,10 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
+      providers: [
+        provideExperimentalZonelessChangeDetection(),
+        provideRouter([{ path: '**', component: AppComponent }]),
+      ],
     }).compileComponents();
   });
 
@@ -20,10 +26,11 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('prd-test');
   });
 
-  it('should render title', () => {
+  it('should render links', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, prd-test');
+    const links = compiled.querySelectorAll('[routerLink]');
+    expect(links.length).toBe(1);
   });
 });
