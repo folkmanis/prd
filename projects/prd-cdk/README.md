@@ -29,6 +29,7 @@ type OnBlurAction = 'ignore' | 'calculate';
 - filesize
 - hideZero
 - shortenText
+- plusSign - adds '+' to positive values
 
 ## RxJS
 

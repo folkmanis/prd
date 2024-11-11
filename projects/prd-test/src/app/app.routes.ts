@@ -8,4 +8,11 @@ export const routes: Routes = [
         (c) => c.InputTestComponent
       ),
   },
+  {
+    path: 'plus-sign-pipe',
+    loadComponent: () =>
+      import('./plus-sign-pipe/plus-sign-pipe.component').then(
+        (c) => c.PlusSignPipeComponent
+      ),
+  },
 ];

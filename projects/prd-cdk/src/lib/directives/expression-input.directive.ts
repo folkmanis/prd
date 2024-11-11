@@ -16,6 +16,7 @@ export type OnBlurAction = 'ignore' | 'calculate';
   standalone: true,
   host: {
     '(blur)': 'onBlur()',
+    '[style.inputmode]': 'decimal',
   },
   exportAs: 'prdExpressionInput',
 })
