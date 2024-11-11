@@ -30,15 +30,13 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/prd-cdk/tsconfig.lib.json",
-              "projects/prd-cdk/tsconfig.spec.json"
+            "lintFilePatterns": [
+              "projects/prd-cdk/**/*.ts",
+              "projects/prd-cdk/**/*.html"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "eslintConfig": "projects/prd-cdk/eslint.config.js"
           }
         }
       }
@@ -132,6 +130,16 @@
               "projects/prd-test/src/styles.scss"
             ],
             "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/prd-test/**/*.ts",
+              "projects/prd-test/**/*.html"
+            ],
+            "eslintConfig": "projects/prd-test/eslint.config.js"
           }
         }
       }

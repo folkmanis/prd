@@ -12,11 +12,13 @@ export class FilesizePipe implements PipeTransform {
    * @param value numerical value in bytes
    * @param options refer to https://filesizejs.com/
    */
-  transform(value: number, options?: any): string | null {
+  transform(
+    value: number,
+    options?: Parameters<typeof filesize>[1]
+  ): string | null {
     if (isNaN(+value)) {
       return null;
     }
     return filesize(value, options) as string;
   }
-
 }

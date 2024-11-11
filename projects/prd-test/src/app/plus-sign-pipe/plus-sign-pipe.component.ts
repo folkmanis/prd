@@ -11,5 +11,5 @@ import { PlusSignPipe } from 'prd-cdk';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlusSignPipeComponent {
-  value = model<any>('');
+  value = model<unknown>('');
 }

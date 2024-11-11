@@ -8,7 +8,7 @@ const toPlusString = (value: number): string =>
   standalone: true,
 })
 export class PlusSignPipe implements PipeTransform {
-  transform(value: unknown, ...args: unknown[]): unknown {
+  transform(value: unknown): unknown {
     if (typeof value === 'number' && !isNaN(value)) {
       return toPlusString(value);
     }
