@@ -8,11 +8,9 @@
       #calc="prdExpressionInput"
       #testInput
     />
-    @if (testInput.value.toString() !== calc.calculatedValue()?.toString() ) {
-    <mat-hint>
-      {{ calc.calculatedValue() }}
+    <mat-hint align="end">
+      {{ calc.calculatedUpdate() }}
     </mat-hint>
-    }
   </mat-form-field>
 </div>
 <div>

@@ -15,11 +15,13 @@ import {
   standalone: true,
   imports: [FormsModule, ExpressionInputDirective],
   template: `<input
-    [(ngModel)]="value"
-    prdExpressionInput
-    [prdExpressionInputOnBlur]="onBlurAction()"
-    [prdExpressionNoComma]="noComma()"
-  />`,
+      [(ngModel)]="value"
+      prdExpressionInput
+      [prdExpressionInputOnBlur]="onBlurAction()"
+      [prdExpressionNoComma]="noComma()"
+      #expressionInput="prdExpressionInput"
+    />
+    <div calculatedUpdate>{{ expressionInput.calculatedUpdate() }}</div> `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class TestComponent {
@@ -94,11 +96,24 @@ describe('ExpressionInputDirective', () => {
 
   it('Should produce null on invalid expression', async () => {
     await setInput('2*2');
-    await fixture.whenStable();
     await setInput('2*2+');
-    input.dispatchEvent(new InputEvent('input'));
-    await fixture.whenStable();
     expect(component.value).toBeNull();
+  });
+
+  it('Should emit updated value', async () => {
+    await setInput('2*2');
+    expect(
+      fixture.nativeElement.querySelector('[calculatedUpdate]').innerText
+    ).toBe('4');
+  });
+
+  it('Should emit updated value', async () => {
+    await setInput('2*2');
+    input.dispatchEvent(new Event('blur'));
+    await fixture.whenStable();
+    expect(
+      fixture.nativeElement.querySelector('[calculatedUpdate]').innerText
+    ).toBe('');
   });
 
   async function setInput(value: string) {
