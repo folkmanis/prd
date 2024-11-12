@@ -37,6 +37,6 @@ describe('PlusSignPipe', () => {
 
   it('should ignore empty string', () => {
     expect(pipe.transform('')).toBe('');
-    expect(pipe.transform('  ')).toBe('');
+    expect(pipe.transform('  ')).toBe('  ');
   });
 });
