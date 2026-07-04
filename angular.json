@@ -18,15 +18,14 @@
           "configurations": {
             "production": {
               "tsConfig": "projects/prd-cdk/tsconfig.lib.prod.json"
-            }
+            },
+            "development": {}
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "main": "projects/prd-cdk/src/test.ts",
-            "tsConfig": "projects/prd-cdk/tsconfig.spec.json",
-            "karmaConfig": "projects/prd-cdk/karma.conf.js"
+            "tsConfig": "projects/prd-cdk/tsconfig.spec.json"
           }
         },
         "lint": {
@@ -45,8 +44,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss",
-          "changeDetection": "OnPush"
+          "style": "scss"
         }
       },
       "root": "projects/prd-test",
@@ -96,7 +94,6 @@
               "sourceMap": true
             },
             "testing": {
-              "aot": false,
               "optimization": false,
               "extractLicenses": false
             }

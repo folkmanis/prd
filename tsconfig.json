@@ -3,7 +3,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "noImplicitAny": true,
-    "baseUrl": "./",
+    "rootDir": "./projects",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
@@ -16,13 +16,8 @@
     "moduleResolution": "bundler",
     "importHelpers": true,
     "paths": {
-      "prd-cdk": [
-        "dist/prd-cdk/prd-cdk",
-        "dist/prd-cdk"
-      ],
-      "xlsx": [
-        "./node_modules/xlsx"
-      ]
+      "prd-cdk": ["./dist/prd-cdk/prd-cdk", "./dist/prd-cdk"],
+      "xlsx": ["./node_modules/xlsx"]
     },
     "target": "ES2022",
     "module": "es2020",

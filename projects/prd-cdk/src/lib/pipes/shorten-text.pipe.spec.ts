@@ -1,7 +1,7 @@
 import { ShortenTextPipe } from './shorten-text.pipe';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('ShortenTextPipe', () => {
-
   let pipe: ShortenTextPipe;
   beforeEach(() => {
     pipe = new ShortenTextPipe();
@@ -53,5 +53,4 @@ describe('ShortenTextPipe', () => {
   it('should shorten to 3 symbols', () => {
     expect(pipe.transform('1234', 3)).toBe('...');
   });
-
 });

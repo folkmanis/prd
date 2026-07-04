@@ -1,9 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideExperimentalZonelessChangeDetection,
-  signal,
-} from '@angular/core';
+import { beforeEach, describe, expect, it } from 'vitest';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import {
@@ -38,7 +34,7 @@ describe('ExpressionInputDirective', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestComponent],
-      providers: [provideExperimentalZonelessChangeDetection()],
+      providers: [],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestComponent);
@@ -103,7 +99,7 @@ describe('ExpressionInputDirective', () => {
   it('Should emit updated value', async () => {
     await setInput('2*2');
     expect(
-      fixture.nativeElement.querySelector('[calculatedUpdate]').innerText
+      fixture.nativeElement.querySelector('[calculatedUpdate]').innerText,
     ).toBe('4');
   });
 
@@ -112,7 +108,7 @@ describe('ExpressionInputDirective', () => {
     input.dispatchEvent(new Event('blur'));
     await fixture.whenStable();
     expect(
-      fixture.nativeElement.querySelector('[calculatedUpdate]').innerText
+      fixture.nativeElement.querySelector('[calculatedUpdate]').innerText,
     ).toBe('');
   });
 

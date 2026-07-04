@@ -1,4 +1,5 @@
 import { HideZeroPipe } from './hide-zero.pipe';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('HideZeroPipe', () => {
   let pipe: HideZeroPipe;
@@ -22,6 +23,4 @@ describe('HideZeroPipe', () => {
     expect(pipe.transform(false)).toBe(false);
     expect(pipe.transform({})).toEqual({});
   });
-
-
 });

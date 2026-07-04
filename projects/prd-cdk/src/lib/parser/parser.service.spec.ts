@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-
+import { beforeEach, describe, expect, it } from 'vitest';
 import { ParserService } from './parser.service';
-import { provideExperimentalZonelessChangeDetection } from '@angular/core';
 
 const csvData = `23,45.5,"txt",10\n
 "txt",0,txt\n`;
@@ -15,7 +14,7 @@ describe('ParserService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideExperimentalZonelessChangeDetection()],
+      providers: [],
     });
     service = TestBed.inject(ParserService);
   });

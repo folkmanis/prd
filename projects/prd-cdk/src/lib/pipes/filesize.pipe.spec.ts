@@ -1,7 +1,7 @@
 import { FilesizePipe } from './filesize.pipe';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('FilesizePipe', () => {
-
   let pipe: FilesizePipe;
 
   beforeEach(() => {
@@ -31,7 +31,5 @@ describe('FilesizePipe', () => {
     it('should return null if not number', () => {
       expect(pipe.transform({} as number)).toBeNull();
     });
-
   });
-
 });

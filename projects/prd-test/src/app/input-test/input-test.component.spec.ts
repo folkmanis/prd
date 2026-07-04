@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { InputTestComponent } from './input-test.component';
-import { provideExperimentalZonelessChangeDetection } from '@angular/core';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 describe('InputTestComponent', () => {
   let component: InputTestComponent;
@@ -11,10 +10,7 @@ describe('InputTestComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [InputTestComponent],
-      providers: [
-        provideExperimentalZonelessChangeDetection(),
-        provideNoopAnimations(),
-      ],
+      providers: [],
     }).compileComponents();
 
     fixture = TestBed.createComponent(InputTestComponent);

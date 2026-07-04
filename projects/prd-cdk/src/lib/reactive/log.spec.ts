@@ -1,4 +1,5 @@
 import { TestScheduler } from 'rxjs/testing';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { log } from './log';
 
 describe('it should output to console', () => {
@@ -23,31 +24,33 @@ describe('it should output to console', () => {
   it('should output to console', () => {
     const output = 'txt';
 
-    spyOn(console, 'log');
+    vi.spyOn(console, 'log').mockReturnValue(undefined);
 
     testScheduler.run(({ cold, expectObservable, flush }) => {
       expectObservable(cold('a|', { a: output }).pipe(log('testing'))).toBe(
         '  a|',
-        { a: output }
+        { a: output },
       );
 
       flush();
-      expect(console.log).toHaveBeenCalledOnceWith('testing', output);
+      expect(console.log).toHaveBeenCalledTimes(1);
+      expect(console.log).toHaveBeenCalledWith('testing', output);
     });
   });
   it('should output predicate to console', () => {
     const input = 3;
     const output = 6;
     const predicate = (x: number) => x * 2;
-    spyOn(console, 'log');
+    vi.spyOn(console, 'log').mockReturnValue(undefined);
 
     testScheduler.run(({ cold, expectObservable, flush }) => {
       expectObservable(
-        cold('a|', { a: input }).pipe(log(predicate, 'testing'))
+        cold('a|', { a: input }).pipe(log(predicate, 'testing')),
       ).toBe('  b|', { b: input });
 
       flush();
-      expect(console.log).toHaveBeenCalledOnceWith('testing', output);
+      expect(console.log).toHaveBeenCalledTimes(1);
+      expect(console.log).toHaveBeenCalledWith('testing', output);
     });
   });
 });

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { PlusSignPipeComponent } from './plus-sign-pipe.component';
 
@@ -8,9 +9,8 @@ describe('PlusSignPipeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PlusSignPipeComponent]
-    })
-    .compileComponents();
+      imports: [PlusSignPipeComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PlusSignPipeComponent);
     component = fixture.componentInstance;

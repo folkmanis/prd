@@ -35,18 +35,19 @@
     "codelyzer": "^6.0.2",
     "eslint": "^9.28.0",
     "istanbul-lib-instrument": "^6.0.3",
-    "jasmine-core": "^3.8.0",
     "jasmine-spec-reporter": "~5.0.0",
-    "karma": "^6.3.4",
-    "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage": "~2.0.3",
-    "karma-jasmine": "~4.0.0",
-    "karma-jasmine-html-reporter": "^1.7.0",
+    "jsdom": "^29.1.1",
     "ng-packagr": "^22.0.1",
     "protractor": "~7.0.0",
     "ts-node": "^10.5.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.33.1",
-    "vitest": "^4.0.8"
+    "vitest": "^4.1.9"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.5.6": true,
+    "lmdb@3.5.4": true,
+    "msgpackr-extract@3.0.4": true,
+    "esbuild@0.28.1": true
   }
 }

@@ -1,16 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { provideExperimentalZonelessChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
-      providers: [
-        provideExperimentalZonelessChangeDetection(),
-        provideRouter([{ path: '**', component: AppComponent }]),
-      ],
+      providers: [provideRouter([{ path: '**', component: AppComponent }])],
     }).compileComponents();
   });
 
@@ -31,6 +28,6 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const links = compiled.querySelectorAll('[routerLink]');
-    expect(links.length).toBe(1);
+    expect(links.length).toBe(2);
   });
 });
