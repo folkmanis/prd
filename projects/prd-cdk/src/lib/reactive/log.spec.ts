@@ -49,7 +49,7 @@ describe('it should output to console', () => {
       ).toBe('  b|', { b: input });
 
       flush();
-      expect(console.log).toHaveBeenCalledTimes(1);
+      expect(console.log).toHaveBeenCalledTimes(2);
       expect(console.log).toHaveBeenCalledWith('testing', output);
     });
   });
