@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { form, FormField } from '@angular/forms/signals';
 import {
   ExpressionInputDirective,
   OnBlurAction,
@@ -9,9 +9,9 @@ import {
 
 @Component({
   standalone: true,
-  imports: [FormsModule, ExpressionInputDirective],
+  imports: [FormField, ExpressionInputDirective],
   template: `<input
-      [(ngModel)]="value"
+      [formField]="form.expression"
       prdExpressionInput
       [prdExpressionInputOnBlur]="onBlurAction()"
       [prdExpressionNoComma]="noComma()"
@@ -21,7 +21,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class TestComponent {
-  value: number | null = null;
+  formModel = signal({ expression: '' });
+  form = form(this.formModel);
   onBlurAction = signal<OnBlurAction>('calculate');
   noComma = signal(false);
 }
@@ -48,6 +49,13 @@ describe('ExpressionInputDirective', () => {
     expect(input).toBeTruthy();
   });
 
+  it('should contain calculated value element', () => {
+    const calculatedUpdate =
+      fixture.nativeElement.querySelector('[calculatedUpdate]');
+    expect(calculatedUpdate).toBeTruthy();
+    expect(calculatedUpdate.textContent).toBe('');
+  });
+
   it('input value should be empty initialy', () => {
     expect(input.value).toBe('');
   });
@@ -57,21 +65,16 @@ describe('ExpressionInputDirective', () => {
     expect(input.value).toBe('2*2');
   });
 
-  it('Should calculate valid expression', async () => {
-    await setInput('2*2.1');
-    expect(component.value).toBe(4.2);
-  });
-
   it('Should accept comma as separator', async () => {
     await setInput('2*2,1');
-    expect(component.value).toBe(4.2);
+    expect(input.value).toBe('2*2.1');
   });
 
-  it('Should accept comma as separator', async () => {
+  it('Should not accept comma as separator', async () => {
     component.noComma.set(true);
     await fixture.whenStable();
     await setInput('2*2,1');
-    expect(component.value).toBeNull();
+    expect(input.value).toBe('2*2,1');
   });
 
   it('should update input on blur', async () => {
@@ -82,7 +85,7 @@ describe('ExpressionInputDirective', () => {
     expect(input.value).toBe('4');
   });
 
-  it('should not update input on blur', async () => {
+  it('should not update input on blur when set to ignore', async () => {
     component.onBlurAction.set('ignore');
     await setInput('2*2');
     input.dispatchEvent(new Event('blur'));
@@ -90,25 +93,32 @@ describe('ExpressionInputDirective', () => {
     expect(input.value).toBe('2*2');
   });
 
-  it('Should produce null on invalid expression', async () => {
+  it('Should update form value on blur', async () => {
     await setInput('2*2');
-    await setInput('2*2+');
-    expect(component.value).toBeNull();
+    input.dispatchEvent(new Event('blur'));
+    await fixture.whenStable();
+    expect(component.form.expression().value()).toBe('4');
   });
 
-  it('Should emit updated value', async () => {
+  it('Should form value reflect invalid value too', async () => {
+    await setInput('2*2');
+    await setInput('2*2+');
+    expect(component.form.expression().value()).toBe('2*2+');
+  });
+
+  it('Should emit display value', async () => {
     await setInput('2*2');
     expect(
-      fixture.nativeElement.querySelector('[calculatedUpdate]').innerText,
+      fixture.nativeElement.querySelector('[calculatedUpdate]').textContent,
     ).toBe('4');
   });
 
-  it('Should emit updated value', async () => {
+  it('Should reset display value', async () => {
     await setInput('2*2');
     input.dispatchEvent(new Event('blur'));
     await fixture.whenStable();
     expect(
-      fixture.nativeElement.querySelector('[calculatedUpdate]').innerText,
+      fixture.nativeElement.querySelector('[calculatedUpdate]').textContent,
     ).toBe('');
   });
 

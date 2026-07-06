@@ -7,7 +7,6 @@ import {
   input,
   signal,
 } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { evaluate } from 'simple-math-evaluator';
 
 export type OnBlurAction = 'ignore' | 'calculate';
@@ -16,22 +15,21 @@ export type OnBlurAction = 'ignore' | 'calculate';
   selector: 'input[prdExpressionInput]',
   standalone: true,
   host: {
+    inputmode: 'numeric',
     '(blur)': 'onBlur()',
+    '(input)': 'onInput()',
   },
   exportAs: 'prdExpressionInput',
 })
 export class ExpressionInputDirective {
-  private input = inject(ElementRef).nativeElement as HTMLInputElement;
-
-  private inputValue = signal('');
+  private el = inject(ElementRef<HTMLInputElement>);
+  private syncing = false;
 
   private readonly calculated = signal<number | null>(null);
   calculatedValue = this.calculated.asReadonly();
 
   calculatedUpdate = computed(() => {
-    return this.inputValue().toString() !== this.calculated()?.toString()
-      ? this.calculated()
-      : '';
+    return this.calculated()?.toString() ?? '';
   });
 
   noCommaSeparator = input(false, {
@@ -43,46 +41,51 @@ export class ExpressionInputDirective {
     alias: 'prdExpressionInputOnBlur',
   });
 
-  constructor(ngControl: NgControl) {
-    if (ngControl.valueAccessor) {
-      this.expressionWriteValue(ngControl.valueAccessor);
-      this.expressionAccessor(ngControl.valueAccessor);
+  onInput() {
+    if (this.syncing) return;
+
+    const input = this.el.nativeElement;
+    const value = input.value;
+
+    const replaced = this.replaceCommas(value);
+
+    this.calculated.set(this.evaluateExpression(replaced));
+
+    if (replaced === value) return;
+
+    const start = input.selectionStart;
+    const end = input.selectionEnd;
+
+    this.syncing = true;
+
+    input.value = replaced;
+
+    if (start !== null && end !== null) {
+      queueMicrotask(() => input.setSelectionRange(start, end));
     }
+
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    this.syncing = false;
   }
 
   onBlur() {
-    const calc = this.calculated();
-    if (this.onBlurAction() === 'calculate' && typeof calc === 'number') {
-      this.inputValue.set(calc.toString());
-      this.input.value = this.inputValue();
+    const input = this.el.nativeElement;
+    const value = input.value;
+
+    const replaced = this.replaceCommas(value);
+
+    const calc = this.evaluateExpression(replaced);
+
+    if (
+      this.onBlurAction() === 'calculate' &&
+      typeof calc === 'number' &&
+      calc.toString() !== value
+    ) {
+      input.value = calc.toString();
+      input.dispatchEvent(new Event('input', { bubbles: true }));
     }
-  }
 
-  private expressionWriteValue(valueAccessor: ControlValueAccessor) {
-    const original = valueAccessor.writeValue;
-
-    valueAccessor.writeValue = (obj: unknown) => {
-      original.call(valueAccessor, obj);
-      if (typeof obj === 'string' || typeof obj === 'number') {
-        this.inputValue.set(obj.toString());
-      }
-    };
-  }
-
-  private expressionAccessor(valueAccessor: ControlValueAccessor) {
-    const original = valueAccessor.registerOnChange;
-
-    valueAccessor.registerOnChange = (fn: (_: unknown) => void) => {
-      return original.call(valueAccessor, (value: unknown) => {
-        if (typeof value === 'string') {
-          this.inputValue.set(value);
-          this.calculated.set(this.evaluateExpression(value));
-          return fn(this.calculated());
-        } else {
-          return fn(null);
-        }
-      });
-    };
+    this.calculated.set(null);
   }
 
   private evaluateExpression(value: string): number | null {
